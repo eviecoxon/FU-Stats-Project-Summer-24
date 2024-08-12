@@ -1,9 +1,9 @@
 %% Time Series Extraction
 % initializing SPM
-spm_path = '/Users/canbolat/Desktop/spm12'; % Enter the path of your SPM folder
+spm_path = '/Users/greta/Desktop/spm12'; % Enter the path of your SPM folder
 
 % set local data path
-data_folder_path = '/Users/canbolat/Desktop/stats_project/data'; % Enter the root path of where your data is stored
+data_folder_path = '/Volumes/GRETA/DCM_project'; % Enter the root path of where your data is stored
 
 % add paths
 addpath(spm_path)
@@ -13,7 +13,10 @@ spm('defaults', 'fmri')
 spm_jobman('initcfg')
 
 % specifying data, participant and run paths
-subject_folder = {'sub-006','sub-007', 'sub-008', 'sub-009', 'sub-010'};
+subject_folder = {'sub-001', 'sub-002','sub-003', 'sub-004', 'sub-005', 'sub-006', 'sub-007', 'sub-008',  'sub-009', 'sub-010'};
+run_folder = {'run-01'};
+
+
 
 %%
 for i = 1:numel(subject_folder) % for loop from 1 to number of elements in folder_sub
@@ -47,7 +50,7 @@ matlabbatch{1}.spm.util.voi.roi{1}.spm.conjunction = 1;  % No conjunction needed
 % matlabbatch{1}.spm.util.voi.roi{1}.spm.contrast = [1 2]; 
 % matlabbatch{1}.spm.util.voi.roi{1}.spm.conjunction = 2; % global conjunction (logical OR) between contrasts
 matlabbatch{1}.spm.util.voi.roi{1}.spm.threshdesc = 'none';
-matlabbatch{1}.spm.util.voi.roi{1}.spm.thresh = 0.001; % you can increase it if you get empty VOIs
+matlabbatch{1}.spm.util.voi.roi{1}.spm.thresh = 0.005; % you can increase it if you get empty VOIs
 matlabbatch{1}.spm.util.voi.roi{1}.spm.extent = 0;
 matlabbatch{1}.spm.util.voi.roi{2}.sphere.centre = [44 -40 60]; 
 matlabbatch{1}.spm.util.voi.roi{2}.sphere.radius = 8; 
@@ -67,7 +70,7 @@ matlabbatch{2}.spm.util.voi.roi{1}.spm.conjunction = 1;  % No conjunction needed
 % matlabbatch{2}.spm.util.voi.roi{1}.spm.contrast = [1 2];  
 % matlabbatch{2}.spm.util.voi.roi{1}.spm.conjunction = 2; % global conjunction (logical OR) between contrasts
 matlabbatch{2}.spm.util.voi.roi{1}.spm.threshdesc = 'none';
-matlabbatch{2}.spm.util.voi.roi{1}.spm.thresh = 0.001; % you can increase it if you get empty VOIs
+matlabbatch{2}.spm.util.voi.roi{1}.spm.thresh = 0.005; % you can increase it if you get empty VOIs
 matlabbatch{2}.spm.util.voi.roi{1}.spm.extent = 0;
 matlabbatch{2}.spm.util.voi.roi{2}.sphere.centre = [-58 6 2]; %
 matlabbatch{2}.spm.util.voi.roi{2}.sphere.radius = 8; 
@@ -86,7 +89,7 @@ matlabbatch{3}.spm.util.voi.roi{1}.spm.conjunction = 1;  % No conjunction needed
 % matlabbatch{3}.spm.util.voi.roi{1}.spm.contrast = [1 2]; 
 % matlabbatch{3}.spm.util.voi.roi{1}.spm.conjunction = 2; % global conjunction (logical OR) between contrasts
 matlabbatch{3}.spm.util.voi.roi{1}.spm.threshdesc = 'none';
-matlabbatch{3}.spm.util.voi.roi{1}.spm.thresh = 0.001; % you can increase it if you get empty VOIs
+matlabbatch{3}.spm.util.voi.roi{1}.spm.thresh = 0.005; % you can increase it if you get empty VOIs
 matlabbatch{3}.spm.util.voi.roi{1}.spm.extent = 0;
 matlabbatch{3}.spm.util.voi.roi{2}.sphere.centre = [60 10 -2]; 
 matlabbatch{3}.spm.util.voi.roi{2}.sphere.radius = 8; 

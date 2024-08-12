@@ -2,21 +2,21 @@ function glm
 %%
 % initializing SPM
 if ~exist('spm_path', 'var')
-    spm_path = '/Users/canbolat/Desktop/spm12';
+    spm_path = '/Users/greta/Desktop/spm12';
 end
 
-% set root path
-if ~exist('folder_path_root','var')
-    root_folder_path = fileparts(matlab.desktop.editor.getActiveFilename);    % storing the directory path of the active file in the MATLAB editor into the variable folder_path_root 
-end
+% set local data path
+data_folder_path = '/Volumes/GRETA/DCM_project'; % Enter the root path of where your data is stored
 
+% add paths
 addpath(spm_path)
+addpath(data_folder_path)
+
 spm('defaults', 'fmri')
 spm_jobman('initcfg')
 
 % specifying data, participant and run paths
-data_folder_path = fullfile(root_folder_path, 'data'); % DATA folder path
-subject_folder = {'sub-001'};
+subject_folder = {'sub-001' 'sub-002'  'sub-003'  'sub-004'  'sub-005'  'sub-006'  'sub-007'  'sub-008'  'sub-009'  'sub-010'};
 run_folder = {'run-01'};
 
 
