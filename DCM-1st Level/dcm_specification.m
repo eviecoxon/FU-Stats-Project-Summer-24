@@ -1,8 +1,8 @@
 % initializing SPM
-spm_path = '/Users/canbolat/Desktop/spm12';
+spm_path = '/Users/greta/Desktop/spm12'; % Enter the path of your SPM folder
 
 % set local data path
-data_folder_path = '/Users/canbolat/Desktop/stats_project/data'; % Enter the root path of where your data is stored
+data_folder_path = '/Volumes/GRETA/DCM_project'; % Enter the root path of where your data is stored
 
 % add paths
 addpath(spm_path)
@@ -12,8 +12,8 @@ spm('defaults', 'fmri')
 spm_jobman('initcfg')
 
 % specifying data, participant and run paths
-subject_folder = {'sub-002'};
-run_folder = {'run-01' 'run-02' 'run-03' 'run-04' 'run-05' 'run-06'};
+subject_folder = {'sub-002', 'sub-004', 'sub-007', 'sub-009', 'sub-010'};
+run_folder = {'run-01'};
 %% Specify DCM Models
 % SPECIFICATION DCMs "attentional modulation of backward/forward connection"
 %--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ for j = 1:numel(subject_folder) % for loop from 1 to number of elements in folde
 
     VOI_folder_path = fullfile(S.data_folder_path, S.subject_folder, 'VOI');     % defining VOI folder path
 
-    DCM_folder_path = fullfile(S.data_folder_path, S.subject_folder, 'DCM');
+    DCM_folder_path = fullfile(S.data_folder_path, S.subject_folder, 'DCM');     % defining DCM folder path
     if ~exist(DCM_folder_path, 'dir')     % Check if the 'DCM' folder does not exist
         mkdir(DCM_folder_path);      % Create the 'DCM' folder
     else
@@ -74,8 +74,8 @@ DCM.U.name = {'Stimulation', 'Imagery', 'Task'}; % Ensure names are correctly co
 
 % Concatenate input values from all sessions, using the entire matrix
 DCM.U.u = [SPM.Sess(1).U(1).u; ...
-           SPM.Sess(2).U(2).u; ...
-           SPM.Sess(3).U(3).u];
+           SPM.Sess(1).U(2).u; ...
+           SPM.Sess(1).U(3).u];
 
 % DCM parameters and options
 %--------------------------------------------------------------------------
@@ -95,7 +95,7 @@ DCM.a = [1,1,1;1,1,0;1,0,1];
 % B-matrix (modulation)
 DCM.b(:,:,1) = [0,1,1;1,0,0;1,0,0];
 DCM.b(:,:,2) = [0,1,1;1,0,0;1,0,0];
-% DCM.b(:,:,3) = [0,0,0;0,0,0;0,0,0];
+DCM.b(:,:,3) = [0,0,0;0,0,0;0,0,0];
 % C-matrix (input effects)
 DCM.c = [1,0,0;1,0,0]';
 % D-matrix (non-linear effects)
@@ -105,82 +105,82 @@ save(fullfile(DCM_folder_path,'DCM_full_model.mat'),'DCM');
 
 % %  Connectivity matrices for forward no imagery modulation model
 % %--------------------------------------------------------------------------
-% DCM.a = [1,1,1;1,1,0;1,0,1];
-% DCM.b = zeros(3,3,3); % No modulation
-% DCM.b(1,2,1) = 1 % rBA2 to left temporal pole stimulation modulation
-% DCM.b(1,3,1) = 1 % rBA2 to right insula stimulation modulation
-% DCM.b(2,1,1) = 1 % right insula to rBA2 stimulation modulation
-% DCM.b(3,1,1) = 1 % left temporal pole to rBA2 stimulation modulation
-% 
-% DCM.c = [0, 0, 1;  % Task driving input affects rBA2
-%          0, 0, 0; 
-%          0, 0, 0]; 
-% 
-%  save(fullfile(DCM_folder_path,'DCM_m1_forward_no_imagery.mat'),'DCM');
+DCM.a = [1,1,1;1,1,0;1,0,1];
+DCM.b = zeros(3,3,3); % No modulation
+DCM.b(1,2,1) = 1 % rBA2 to left temporal pole stimulation modulation
+DCM.b(1,3,1) = 1 % rBA2 to right insula stimulation modulation
+DCM.b(2,1,1) = 1 % right insula to rBA2 stimulation modulation
+DCM.b(3,1,1) = 1 % left temporal pole to rBA2 stimulation modulation
+
+DCM.c = [0, 0, 1;  % Task driving input affects rBA2
+         0, 0, 0; 
+         0, 0, 0]; 
+
+ save(fullfile(DCM_folder_path,'DCM_m1_forward_no_imagery.mat'),'DCM');
 % 
 % %  Connectivity matrices for forward model of imagery
 % %--------------------------------------------------------------------------
-% DCM.a = [1,1,1;1,1,0;1,0,1];
-% DCM.b = zeros(3,3,3);
-% DCM.b(1,2,1) = 1 % rBA2 to left temporal pole stimulation modulation
-% DCM.b(1,3,1) = 1 % rBA2 to right insula stimulation modulation
-% DCM.b(2,1,1) = 1 % right insula to rBA2 stimulation modulation
-% DCM.b(3,1,1) = 1 % left temporal pole to rBA2 stimulation modulation
-% DCM.b(1,2,2) = 1; % rBA2 to left temporal pole imagery modulation
-% DCM.b(1,3,2) = 1; % rBA2 to right_insula imagery modulation
+DCM.a = [1,1,1;1,1,0;1,0,1];
+DCM.b = zeros(3,3,3);
+DCM.b(1,2,1) = 1 % rBA2 to left temporal pole stimulation modulation
+DCM.b(1,3,1) = 1 % rBA2 to right insula stimulation modulation
+DCM.b(2,1,1) = 1 % right insula to rBA2 stimulation modulation
+DCM.b(3,1,1) = 1 % left temporal pole to rBA2 stimulation modulation
+DCM.b(1,2,2) = 1; % rBA2 to left temporal pole imagery modulation
+DCM.b(1,3,2) = 1; % rBA2 to right_insula imagery modulation
+
+
+DCM.c = [0, 0, 1;  % Driving input 3 affects `rBA2`
+         0, 0, 0;  % No input to `left_temporal_pole`
+         0, 0, 0]; % No input to `right_insula`
 % 
-% 
-% DCM.c = [0, 0, 1;  % Driving input 3 affects `rBA2`
-%          0, 0, 0;  % No input to `left_temporal_pole`
-%          0, 0, 0]; % No input to `right_insula`
-% % 
-%  save(fullfile(DCM_folder_path,'DCM_m2_forward_imagery.mat'),'DCM');
+ save(fullfile(DCM_folder_path,'DCM_m2_forward_imagery.mat'),'DCM');
 % 
 %  %  Connectivity matrices for backwards model of imagery
 % %--------------------------------------------------------------------------
-% DCM.a = [1,1,1;1,1,0;1,0,1];
-% DCM.b = zeros(3,3,3);
-% DCM.b(1,2,1) = 1 % rBA2 to left temporal pole stimulation modulation
-% DCM.b(1,3,1) = 1 % rBA2 to right insula stimulation modulation
-% DCM.b(2,1,1) = 1 % right insula to rBA2 stimulation modulation
-% DCM.b(3,1,1) = 1 % left temporal pole to rBA2 stimulation modulation
-% DCM.b(2,1,2) = 1; % left temporal pole to rBA2 imagery modulation
-% DCM.b(3,1,2) = 1; % right insula to rBA2 imagery modulation
+DCM.a = [1,1,1;1,1,0;1,0,1];
+DCM.b = zeros(3,3,3);
+DCM.b(1,2,1) = 1 % rBA2 to left temporal pole stimulation modulation
+DCM.b(1,3,1) = 1 % rBA2 to right insula stimulation modulation
+DCM.b(2,1,1) = 1 % right insula to rBA2 stimulation modulation
+DCM.b(3,1,1) = 1 % left temporal pole to rBA2 stimulation modulation
+DCM.b(2,1,2) = 1; % left temporal pole to rBA2 imagery modulation
+DCM.b(3,1,2) = 1; % right insula to rBA2 imagery modulation
+
+
+DCM.c = [0, 0, 0;  % No input to `rBA2`
+         0, 0, 1;  % Driving input to `left_temporal_pole`
+         0, 0, 1]; % Driving input to `right_insula`
 % 
-% 
-% DCM.c = [0, 0, 0;  % No input to `rBA2`
-%          0, 0, 1;  % Driving input to `left_temporal_pole`
-%          0, 0, 1]; % Driving input to `right_insula`
-% % 
-%  save(fullfile(DCM_folder_path,'DCM_m3_backwards_imagery.mat'),'DCM');
-% 
+ save(fullfile(DCM_folder_path,'DCM_m3_backwards_imagery.mat'),'DCM');
+
 %  %  Connectivity matrices for backwards imagery and forward stimulation
 % %--------------------------------------------------------------------------
-% DCM.a = [1,1,1;1,1,0;1,0,1];
-% DCM.b = zeros(3,3,3);
-% DCM.b(1,2,1) = 1 % rBA2 to left temporal pole stimulation modulation
-% DCM.b(1,3,1) = 1 % rBA2 to right insula stimulation modulation
-% DCM.b(2,1,2) = 1; % left temporal pole to rBA2 imagery modulation
-% DCM.b(3,1,2) = 1; % right insula to rBA2 imagery modulation
+DCM.a = [1,1,1;1,1,0;1,0,1];
+DCM.b = zeros(3,3,3);
+DCM.b(1,2,1) = 1 % rBA2 to left temporal pole stimulation modulation
+DCM.b(1,3,1) = 1 % rBA2 to right insula stimulation modulation
+DCM.b(2,1,2) = 1; % left temporal pole to rBA2 imagery modulation
+DCM.b(3,1,2) = 1; % right insula to rBA2 imagery modulation
+
+DCM.c = [0, 0, 1;  % Driving input to `rBA2`
+         0, 0, 1;  % Driving input to `left_temporal_pole`
+         0, 0, 1]; % Driving input to `right_insula`
 % 
-% DCM.c = [0, 0, 1;  % Driving input to `rBA2`
-%          0, 0, 1;  % Driving input to `left_temporal_pole`
-%          0, 0, 1]; % Driving input to `right_insula`
-% % 
-%  save(fullfile(DCM_folder_path,'DCM_m4_backward_imag_forward_stim.mat'),'DCM');
+ save(fullfile(DCM_folder_path,'DCM_m4_backward_imag_forward_stim.mat'),'DCM');
 
 % % DCM Estimation
 % %--------------------------------------------------------------------------
-% clear matlabbatch
-% matlabbatch = [];
-% matlabbatch{1}.spm.dcm.fmri.estimate.dcmmat = {...
-%     fullfile(DCM_folder_path,'DCM_full_model.mat'); ...
-%     fullfile(DCM_folder_path,'DCM_m1_forward_no_imagery.mat') ; ...
-%     fullfile(DCM_folder_path,'DCM_m2_forward_imagery.mat') ; ...
-%     fullfile(DCM_folder_path,'DCM_m3_backwards_imagery.mat') ; ...
-%     fullfile(DCM_folder_path,'DCM_m4_backward_imag_forward_stim.mat')};
-% 
-% spm_jobman('run',matlabbatch);
+clear matlabbatch
+matlabbatch = [];
+matlabbatch{1}.spm.dcm.fmri.estimate.dcmmat = {...
+    fullfile(DCM_folder_path,'DCM_full_model.mat'); ...
+    fullfile(DCM_folder_path,'DCM_m1_forward_no_imagery.mat') ; ...
+    fullfile(DCM_folder_path,'DCM_m2_forward_imagery.mat') ; ...
+    fullfile(DCM_folder_path,'DCM_m3_backwards_imagery.mat') ; ...
+    fullfile(DCM_folder_path,'DCM_m4_backward_imag_forward_stim.mat')};
+
+spm_jobman('run',matlabbatch);
 % 
 % 
 end
