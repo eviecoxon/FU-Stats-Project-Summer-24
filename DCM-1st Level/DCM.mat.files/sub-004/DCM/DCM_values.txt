@@ -1,0 +1,49 @@
+Posterior Estimates (Ep), Variances (Vp), and Precisions (Pp):
+
+Intrinsic Connections:
+S1 to S2:
+  Ep: 0.0078
+  Vp: 0.0151
+  Pp: 0.5000
+S2 to S1:
+  Ep: 0.0078
+  Vp: 0.0156
+  Pp: 0.5000
+S2 to IPL:
+  Ep: 0.0000
+  Vp: 0.0000
+  Pp: NaN
+IPL to S2:
+  Ep: 0.0000
+  Vp: 0.0000
+  Pp: NaN
+
+Modulatory Connections (StimBU):
+S1 to S2:
+  Ep: 0.0000
+  Vp: 0.6449
+  Pp: 0.5000
+S2 to IPL:
+  Ep: 0.0000
+  Vp: 0.0000
+  Pp: NaN
+
+Modulatory Connections (ImagTD):
+S2 to S1:
+  Ep: 0.0000
+  Vp: 0.0000
+  Pp: NaN
+IPL to S2:
+  Ep: 0.0000
+  Vp: 0.0000
+  Pp: NaN
+
+Driving Inputs:
+Stimulation to S1:
+  Ep: 0.0287
+  Vp: 0.0021
+  Pp: 0.7324
+Imagery to S1:
+  Ep: -0.0187
+  Vp: 0.0024
+  Pp: 0.6493
