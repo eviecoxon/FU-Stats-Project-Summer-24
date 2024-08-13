@@ -2,11 +2,11 @@ function glm
 %%
 % initializing SPM
 if ~exist('spm_path', 'var')
-    spm_path = '/Users/greta/Desktop/spm12';
+spm_path = '/Users/canbolat/Desktop/spm12'; % Path to SPM folder
 end
 
 % set local data path
-data_folder_path = '/Volumes/GRETA/DCM_project'; % Enter the root path of where your data is stored
+data_folder_path = '/Users/canbolat/Desktop/stats_project/data'; % Root path of the data
 
 % add paths
 addpath(spm_path)
@@ -162,3 +162,5 @@ end
 
 %
 end
+
+%% Script by Can and assisted by Greta

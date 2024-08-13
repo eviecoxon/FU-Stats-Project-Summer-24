@@ -1,9 +1,9 @@
 %% Time Series Extraction
 % initializing SPM
-spm_path = '/Users/greta/Desktop/spm12'; % Enter the path of your SPM folder
+spm_path = '/Users/canbolat/Desktop/spm12'; % Path to SPM folder
 
 % set local data path
-data_folder_path = '/Volumes/GRETA/DCM_project'; % Enter the root path of where your data is stored
+data_folder_path = '/Users/canbolat/Desktop/stats_project/data'; % Root path of the data
 
 % add paths
 addpath(spm_path)
@@ -131,3 +131,5 @@ voi_nii_files = spm_select('ExtFPList', glm_folder_path, voi_nii_pattern);
         end
      end
 end
+
+%% Script by Can and assisted by Greta
