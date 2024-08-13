@@ -1,4 +1,4 @@
-% Specify SPM and data paths
+Specify SPM and data paths
 spm_path = '/Users/canbolat/Desktop/spm12'; % Path to SPM folder
 data_folder_path = '/Users/canbolat/Desktop/stats_project/data'; % Root path of the data
 
@@ -13,17 +13,17 @@ subject_list = {'sub-002', 'sub-003', 'sub-004', 'sub-007', 'sub-009', 'sub-010'
 % Loop through each subject and perform model comparison
 for i = 1:numel(subject_list)
     subject = subject_list{i}; % Get the current subject ID
-    
+
     % Define DCM files for the current subject
     dcm_folder_path = fullfile(data_folder_path, subject, 'DCM');
     dcm_files = {
-        %fullfile(dcm_folder_path, 'DCM_full_model.mat'),
+        fullfile(dcm_folder_path, 'DCM_full_model.mat'),
         fullfile(dcm_folder_path, 'DCM_m1_no_imagery.mat'),
         fullfile(dcm_folder_path, 'DCM_m2_forward_imagery.mat'),
         fullfile(dcm_folder_path, 'DCM_m3_backwards_imagery.mat'),
         fullfile(dcm_folder_path, 'DCM_m4_backward_imag_forward_stim.mat')
     };
-    
+
     % Define batch for model comparison
     matlabbatch = [];
     matlabbatch{1}.spm.dcm.bms.inference.dir = {data_folder_path}; % Output directory
@@ -34,11 +34,37 @@ for i = 1:numel(subject_list)
     matlabbatch{1}.spm.dcm.bms.inference.family_level.family_file = {''};
     matlabbatch{1}.spm.dcm.bms.inference.bma.bma_no = 0;
     matlabbatch{1}.spm.dcm.bms.inference.verify_id = 1;
-    
+
     % Run the batch job
     spm_jobman('run', matlabbatch);
-    
-    disp(['Model comparison completed for ', subject]);
+
+    % Save the resulting figures
+    figHandles = findall(0, 'Type', 'figure'); % Find all figure handles
+    for j = 1:length(figHandles)
+        figHandle = figHandles(j);
+        figName = sprintf('ModelComparison_%s_Figure_%d.png', subject, j);
+        saveas(figHandle, fullfile(dcm_folder_path, figName)); % Save the figure
+        close(figHandle); % Close the figure after saving
+    end
+
+    disp(['Model comparison completed and figures saved for ', subject]);
 end
 
-disp('All model comparisons completed.');
+disp('All model comparisons and figure saving completed.');
+
+% Specify SPM and data paths
+spm_path = '/Users/canbolat/Desktop/spm12'; % Path to SPM folder
+data_folder_path = '/Users/canbolat/Desktop/stats_project/data'; % Root path of the data
+
+% Add paths
+addpath(spm_path)
+spm('defaults', 'fmri')
+spm_jobman('initcfg')
+
+% Directory to save all figures
+figures_folder = fullfile(data_folder_path, 'ModelComparisonFigures');
+
+% Create the figures directory if it doesn't exist
+if ~exist(figures_folder, 'dir')
+    mkdir(figures_folder);
+end

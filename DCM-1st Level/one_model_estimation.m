@@ -93,22 +93,21 @@ for j = 1:numel(subject_folder) % for loop from 1 to number of elements in folde
     pp_Imag_ri_to_rba2 = pp_posterior_B(1, 2, 2); % ri to rba2
     pp_Imag_ltp_to_rba2 = pp_posterior_B(1, 3, 2); % ltp to rba2
     
-    % Remove driving input from rba2
-    % Driving input (omit for rba2)
+    % Driving input 
     ep_driving_input_stimulation_ltp = ep_posterior_C(2, 1); % Stimulation input to ltp
     ep_driving_input_stimulation_ri = ep_posterior_C(3, 1); % Stimulation input to ri
     
     ep_driving_input_imagery_ltp = ep_posterior_C(2, 2); % Imagery input to ltp
     ep_driving_input_imagery_ri = ep_posterior_C(3, 2); % Imagery input to ri
     
-    % Driving input (omit for rba2)
+    % Driving input 
     vp_driving_input_stimulation_ltp = vp_posterior_C(2, 1); % Stimulation input to ltp
     vp_driving_input_stimulation_ri = vp_posterior_C(3, 1); % Stimulation input to ri
     
     vp_driving_input_imagery_ltp = vp_posterior_C(2, 2); % Imagery input to ltp
     vp_driving_input_imagery_ri = vp_posterior_C(3, 2); % Imagery input to ri
     
-    % Driving input (omit for rba2)
+    % Driving input
     pp_driving_input_stimulation_ltp = pp_posterior_C(2, 1); % Stimulation input to ltp
     pp_driving_input_stimulation_ri = pp_posterior_C(3, 1); % Stimulation input to ri
     
